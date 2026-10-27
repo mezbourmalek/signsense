@@ -217,4 +217,23 @@ marimo/_lsp/
 __marimo__/
 
 # Streamlit
-.streamlit/secrets.toml
+.streamlit/secrets.toml 
+# ===== Spécifique au projet =====
+
+# Données (jamais commitées, partage via Kaggle/Drive)
+data/
+*.npy
+*.npz
+*.parquet
+*.csv
+!results/*.csv
+
+# Environnements supplémentaires
+mp_env/
+
+# PyCharm
+.idea/
+
+# Vidéos et enregistrements webcam
+*.mp4
+*.avi
