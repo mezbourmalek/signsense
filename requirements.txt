@@ -1,8 +1,8 @@
-numpy
-pandas
-pyarrow
-opencv-python
-mediapipe
-scikit-learn
-matplotlib
-tensorflow   
+numpy==1.26.4
+pandas==2.2.3
+pyarrow==19.0.1
+opencv-contrib-python==4.11.0.86
+mediapipe==0.10.21
+scikit-learn==1.9.1
+matplotlib==3.11.2
+tensorflow==2.15.1
