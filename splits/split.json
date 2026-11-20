@@ -1,0 +1,50 @@
+{
+  "rules": "15/3/3; validation and test = 1 left + 2 right; mixed participant in train",
+  "input_file": "participant_summary.csv",
+  "input_sha256_normalized": "f9f62278a0cc6aeff206de54a980ad5f4af07478a4a99252f4e423372a3567c1",
+  "n_splits_evaluated": 83160,
+  "targets": {
+    "size": 810.4285714285714,
+    "share_under_10": 0.20483254010223864,
+    "mean_median_frames": 23.857142857142858
+  },
+  "sigma": {
+    "size": 44.508539641398905,
+    "share_under_10": 0.07826268865857315,
+    "mean_median_frames": 5.827203368866645
+  },
+  "score": {
+    "worst_group": 0.377577291279,
+    "sum": 0.738528861097
+  },
+  "warnings": [],
+  "groups": {
+    "train": [
+      2044,
+      4718,
+      16069,
+      18796,
+      27610,
+      28656,
+      32319,
+      34503,
+      36257,
+      37055,
+      37779,
+      49445,
+      53618,
+      55372,
+      62590
+    ],
+    "validation": [
+      22343,
+      29302,
+      30680
+    ],
+    "test": [
+      25571,
+      26734,
+      61333
+    ]
+  }
+}
