@@ -52,3 +52,4 @@ DATA_DIR = Path(os.environ.get("SIGNSENSE_DATA", r"E:\SignSense_data"))
 TRAIN_CSV = DATA_DIR / "raw" / "train.csv"
 LANDMARKS_DIR = DATA_DIR / "raw" / "landmarks"
 PROCESSED_DIR = DATA_DIR / "processed"
+MAX_GAP_FRAMES = 5  # longest run of missing hand frames that is filled by interpolation
