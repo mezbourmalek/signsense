@@ -1,0 +1,73 @@
+{
+  "words": [
+    "hello",
+    "thankyou",
+    "please",
+    "yes",
+    "no",
+    "wait",
+    "finish",
+    "where",
+    "go",
+    "home",
+    "drink",
+    "book",
+    "airplane",
+    "car",
+    "jump"
+  ],
+  "input_shape": [
+    30,
+    144
+  ],
+  "args": {
+    "arrays_dir": "C:\\Users\\Administrator\\Downloads\\SignSense-20261123T104015Z-1-001\\SignSense\\arrays",
+    "model": "gru",
+    "layers": 2,
+    "units": 128,
+    "dropout": 0.3,
+    "lr": 0.001,
+    "batch_size": 64,
+    "epochs": 100,
+    "patience": 15,
+    "min_hand_frames_train": 0,
+    "augment": 2,
+    "mirror": true,
+    "velocity": true,
+    "split": "C:\\Users\\Administrator\\Desktop\\signsense-main\\signsense-main\\splits\\cv\\fold6.json",
+    "out_dir": "C:\\Users\\Administrator\\Desktop\\signsense-main\\signsense-main\\models\\cv",
+    "results": "C:\\Users\\Administrator\\Desktop\\signsense-main\\signsense-main\\models\\cv\\cv_results.csv",
+    "seed": 42,
+    "name": "cv_aug_mirror_vel_f6"
+  },
+  "per_participant": {
+    "validation": {
+      "25571": {
+        "n": 233,
+        "acc": 0.794
+      },
+      "26734": {
+        "n": 290,
+        "acc": 0.9207
+      },
+      "61333": {
+        "n": 291,
+        "acc": 0.9107
+      }
+    },
+    "test": {
+      "36257": {
+        "n": 284,
+        "acc": 0.7218
+      },
+      "37055": {
+        "n": 267,
+        "acc": 0.7603
+      },
+      "55372": {
+        "n": 282,
+        "acc": 0.8723
+      }
+    }
+  }
+}

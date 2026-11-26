@@ -16,6 +16,37 @@ _SHOULDERS = [config.POSE_SLICE.start // config.N_COORDS + config.POSE_INDICES.i
               for i in (11, 12)]
 
 
+def _landmarks_to_array(landmark_list, indices):
+    """x, y, z of the given landmarks as float32 [len(indices) * 3]; all NaN if the list is None."""
+    out = np.full(len(indices) * config.N_COORDS, np.nan, dtype=np.float32)
+    if landmark_list is None:
+        return out
+    points = landmark_list.landmark
+    for slot, index in enumerate(indices):
+        p = points[index]
+        out[slot * config.N_COORDS:(slot + 1) * config.N_COORDS] = (p.x, p.y, p.z)
+    return out
+
+
+def extract_from_mediapipe(results):
+    """Convert one MediaPipe Holistic result into one frame, float32 [144].
+
+    Same layout as the dataset (config.py): left hand, right hand, 6 pose points.
+    A part MediaPipe did not detect stays NaN, exactly like the Kaggle data.
+
+    IMPORTANT: give MediaPipe the raw camera image. If the picture is mirrored
+    (cv2.flip) before MediaPipe sees it, left and right hands are swapped and the
+    model fails. Mirror only the image that is displayed.
+
+    Stack the frames of a window into [n_frames, 144] and call preprocess_sample().
+    """
+    return np.concatenate([
+        _landmarks_to_array(results.left_hand_landmarks, range(config.HAND_LANDMARKS)),
+        _landmarks_to_array(results.right_hand_landmarks, range(config.HAND_LANDMARKS)),
+        _landmarks_to_array(results.pose_landmarks, config.POSE_INDICES),
+    ])
+
+
 def normalize(sample):
     """Center each frame on the midpoint of the shoulders and divide by shoulder width.
 

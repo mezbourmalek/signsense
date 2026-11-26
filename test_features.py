@@ -65,6 +65,44 @@ def test_resample():
         assert (np.diff(out[:, 0]) >= 0).all()
 
 
+def _fake_results(left=True, right=True, pose=True):
+    """Mimic a MediaPipe Holistic result. Every landmark is (index, index + 0.25, index + 0.5)."""
+    from types import SimpleNamespace as NS
+
+    def make(n):
+        return NS(landmark=[NS(x=i, y=i + 0.25, z=i + 0.5) for i in range(n)])
+    return NS(left_hand_landmarks=make(21) if left else None,
+              right_hand_landmarks=make(21) if right else None,
+              pose_landmarks=make(33) if pose else None)
+
+
+def test_extract_from_mediapipe_layout():
+    frame = features.extract_from_mediapipe(_fake_results())
+    assert frame.shape == (config.FEATURES_PER_FRAME,) and frame.dtype == np.float32
+    assert not np.isnan(frame).any()
+    assert np.allclose(frame[LEFT][3:6], [1, 1.25, 1.5])            # left hand, landmark 1
+    assert np.allclose(frame[RIGHT][60:63], [20, 20.25, 20.5])      # right hand, landmark 20
+    pose = frame[config.POSE_SLICE].reshape(6, 3)
+    assert np.allclose(pose[:, 0], config.POSE_INDICES)             # pose order 11..16
+
+
+def test_extract_from_mediapipe_missing_parts():
+    frame = features.extract_from_mediapipe(_fake_results(left=False, pose=False))
+    assert np.isnan(frame[LEFT]).all() and np.isnan(frame[config.POSE_SLICE]).all()
+    assert not np.isnan(frame[RIGHT]).any()
+
+
+def test_live_window_pipeline():
+    """A window of live frames goes through the same pipeline as the dataset."""
+    window = np.stack([features.extract_from_mediapipe(_fake_results(left=i % 2 == 0))
+                       for i in range(17)])
+    window[:, SHOULDER_COLS[0]:SHOULDER_COLS[0] + 3] = [0.4, 0.5, 0.0]
+    window[:, SHOULDER_COLS[1]:SHOULDER_COLS[1] + 3] = [0.6, 0.5, 0.0]
+    out = features.preprocess_sample(window)
+    assert out.shape == (config.SEQUENCE_LENGTH, config.FEATURES_PER_FRAME)
+    assert not np.isnan(out).any()
+
+
 def test_real_samples():
     """Run the pipeline on the 50-sample extraction (skipped if it does not exist)."""
     folder = config.PROCESSED_DIR / "extracted_test"

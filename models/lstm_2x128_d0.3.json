@@ -1,0 +1,37 @@
+{
+  "words": [
+    "hello",
+    "thankyou",
+    "please",
+    "yes",
+    "no",
+    "wait",
+    "finish",
+    "where",
+    "go",
+    "home",
+    "drink",
+    "book",
+    "airplane",
+    "car",
+    "jump"
+  ],
+  "input_shape": [
+    30,
+    144
+  ],
+  "args": {
+    "arrays_dir": "C:\\Users\\Administrator\\Downloads\\SignSense-20261123T104015Z-1-001\\SignSense\\arrays",
+    "model": "lstm",
+    "layers": 2,
+    "units": 128,
+    "dropout": 0.3,
+    "lr": 0.001,
+    "batch_size": 64,
+    "epochs": 100,
+    "patience": 15,
+    "min_hand_frames_train": 0,
+    "seed": 42,
+    "name": "lstm_2x128_d0.3"
+  }
+}
